@@ -48,52 +48,42 @@
                 <input type="hidden" name="videoId" value="<%= videoData.player_response.videoDetails.videoId %>" />
                 <div class="downfun dispweb"> <button class="btn-action" type="submit">Download</button>
                   <div class="select-box"><select id="format" name="format">
-
-                      <% if (videoData && videoData.player_response && videoData.player_response.streamingData &&
+                      <!-- <% if (videoData && videoData.player_response && videoData.player_response.streamingData &&
                         videoData.player_response.streamingData.adaptiveFormats) { %>
 
                         <% for(var i=0; i < videoData.player_response.streamingData.adaptiveFormats.length; i++) {%>
                           <% if (!videoData.player_response.streamingData.adaptiveFormats[i].mimeType.includes('audio'))
-                            {%>
+                            {
+                              const bytes = videoData.player_response.streamingData.adaptiveFormats[i].contentLength;
+
+                              const k = 1024;
+                              const decimals = 2;
+                              const dm = decimals < 0 ? 0 : decimals;
+                              const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+                              const iVal = Math.floor(Math.log(bytes) / Math.log(k));
+
+                              const covertedSize = parseFloat((bytes / Math.pow(k, iVal)).toFixed(dm)) + ' ' + sizes[iVal];
+                            %>
                             <option
                               value="<%= JSON.stringify(videoData.player_response.streamingData.adaptiveFormats[i]) %>">
                               <%= videoData.player_response.streamingData.adaptiveFormats[i].qualityLabel%>
                                 <%= videoData.player_response.streamingData.adaptiveFormats[i].mimeType%>
+                                 (<%= covertedSize %>)
                             </option>
                             <% } %>
                               <% } %>
-                                <% } %>
+                                <% } %> -->
 
-                                  <!-- <optgroup label="mp4">
-                <option
-                  value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cUErI+d3DCARO3j/2ySOzyAmbYwqRemjFL7DYFQ27t8rrf21g==">MP4
-                  auto quality </option>
-                <option
-                  value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cVU6cPC3DCARO3j/2ySOzyAmbYwqRemjFL7DYFQ27t8rrf21g==">1080p
-                  (44.6 MB) </option>
-                <option
-                  value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cVS68uC3DCARO3j/2ySOzyAmbYwqRemjFL7DYFQ27t8rrf21g==">720p
-                  (18.7 MB) </option>
-                <option value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cVR4cuOkTCBWvHi+XeOOj+ehbY1shu3ilfnFY9GxrFrsbX9">
-                  480p (11.9 MB) </option>
-                <option value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cVW78uOkTCBWvHi+XeOOj+ehbY1shu3ilfnFY9GxrFrsbX9">
-                  360p (12.5 MB) </option>
-                <option
-                  value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cVX7cuC3DCARO3j/2ySOzyAmbYwqRemjFL7DYFQ27t8rrf21g==">240p
-                  (5.8 MB) </option>
-                <option
-                  value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v2cVU7c+C3DCARO3j/2ySOzyAmbYwqRemjFL7DYFQ27t8rrf21g==">144p
-                  (4.3 MB) </option>
-              </optgroup>
-              <optgroup label="3gp">
-                <option
-                  value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5gD4ncVU7c+C3DCARO3j/2ySOzyAmbYwqRemjFL7DYFQ27t8rrf21g==">144p
-                  (MB) </option>
-              </optgroup>
-              <optgroup label="mp3">
-                <option value="0LOyAxbbJ+igRoiCCcFoyxdnPRF1HVvL5l7v3sVU68OOkTCBWvHi+XeOOj+ehbY1shu3ilfnFY9GxrFrsbX9">
-                  128kbps (3 MB) </option>
-              </optgroup> -->
+                                <% for(var i=0; i < mimeTypes.length; i++) {%>
+                                    <option
+                                      value="<%= JSON.stringify(videoData.player_response.streamingData.adaptiveFormats[i]) %>">
+                                      <%= mimeTypes[i].qualityLabel %>
+                                        <%= mimeTypes[i].mimeType %>
+                                         (<%= mimeTypes[i].length %>)
+                                    </option>
+                                      <% } %>
+
                     </select></div>
                 </div>
               </div>

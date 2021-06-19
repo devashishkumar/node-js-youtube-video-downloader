@@ -8,17 +8,43 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Download You Tube Videos' , videoData: '', url: ''});
+  res.render('index', { title: 'Download You Tube Videos' , videoData: '', url: '', mimeTypes: []});
 });
+
+function bytesToSize(bytes) {
+  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+  if (bytes == 0) return '0 Byte';
+  var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+  return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
 
 router.post('/', async function (req, res, next) {
   if (ytdl.validateURL(req.body.url)) {
     try {
       const result = await ytdl.getBasicInfo(req.body.url);
+      const mimeTypes = [];
+      const allMimeTypes = ['mp4', 'webm'];
+      if (result &&
+        result.player_response &&
+        result.player_response.streamingData &&
+        result.player_response.streamingData.adaptiveFormats) {
+          result.player_response.streamingData.adaptiveFormats.forEach((f, index) => {
+            let mimeType = '';
+            if (!f.mimeType.includes('audio')) {
+              mimeTypes.push({
+                qualityLabel: f.qualityLabel,
+                mimeType: (f.mimeType.includes('mp4')) ? 'mp4' : 'webm',
+                length: bytesToSize(f.contentLength),
+                recordIndex: index
+              });
+            }
+          })
+      }
       res.render('index', {
         title: 'Download You Tube Video',
         videoData: result,
-        url: req.body.url
+        url: req.body.url,
+        mimeTypes: mimeTypes
       });
     } catch(e) {
       console.error(e);
@@ -34,7 +60,7 @@ router.post('/', async function (req, res, next) {
     //   }
     // );
   } else {
-    res.render('index', { title: 'Download You Tube Videos' , videoData: '', url: ''});
+    res.render('index', { title: 'Download You Tube Videos' , videoData: '', url: '', mimeTypes: []});
   }
 
 });
@@ -48,9 +74,11 @@ router.post('/download', async function (req, res, next) {
       mimeType = mt;
     }
   });
+  // res.send(req.body.format);
   const fileName = `${req.body.title}-${req.body.format.qualityLabel}.${mimeType}`;
   try {
     res.header('Content-Disposition', `attachment; filename=${fileName}`);
+    // await ytdl.downloadFromInfo(req.body.url, req.body.format).pipe(res);
     await ytdl(req.body.url, { filter: 'audioandvideo',
     qualityLabel: req.body.format.qualityLabel,
     width: req.body.format.width,
@@ -60,7 +88,7 @@ router.post('/download', async function (req, res, next) {
     // quality: req.body.format.quality,
     container: mimeType}).pipe(res);
   } catch(e) {
-
+    console.log(e);
   }
 
   // res.header('Content-Disposition', `attachment; filename=${fileName}`);
