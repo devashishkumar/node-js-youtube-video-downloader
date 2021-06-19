@@ -17,11 +17,11 @@
 
   <div class="ftco-section center">
     <div class="container">
-      <p>Download and save YouTube videos for free</p>
+      <p>Download YouTube videos</p>
       <form id="main-form" class="search-form relative" method="POST" role="search">
         <input id="url" type="enter video url" name="url" class="search__input" aria-label="Search"
-          placeholder="Enter video url" value="">
-        <button id="submit" class="btn-red" type="submit">Start</button>
+          placeholder="Enter video url" required autofocus>
+        <button id="submit" class="btn-red" type="submit">Add Video Link</button>
       </form>
     </div>
 
@@ -44,6 +44,7 @@
             </p>
             <input type="hidden" name="url" value="<%= url %>" />
             <input type="hidden" name="title" value="<%= videoData.player_response.videoDetails.title %>" />
+            <input type="hidden" name="videoId" value="<%= videoData.player_response.videoDetails.videoId %>" />
             <div class="downfun dispweb"> <button class="btn-action" type="submit">Download</button>
               <div class="select-box"><select id="format" name="format">
 
@@ -51,10 +52,12 @@
                     videoData.player_response.streamingData.adaptiveFormats) { %>
 
                     <% for(var i=0; i < videoData.player_response.streamingData.adaptiveFormats.length; i++) {%>
-                      <option>
+                      <% if (!videoData.player_response.streamingData.adaptiveFormats[i].mimeType.includes('audio')) {%>
+                      <option value="<%= JSON.stringify(videoData.player_response.streamingData.adaptiveFormats[i]) %>">
                         <%= videoData.player_response.streamingData.adaptiveFormats[i].qualityLabel%>
                           <%= videoData.player_response.streamingData.adaptiveFormats[i].mimeType%>
                       </option>
+                      <% } %>
                       <% } %>
                         <% } %>
 
