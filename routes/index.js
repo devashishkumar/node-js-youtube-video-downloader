@@ -3,6 +3,7 @@ var express = require('express');
 const fs = require('fs')
 const youtubedl = require('youtube-dl-exec');
 const ytdl = require('ytdl-core');
+const httpsObj = require('https');
 
 var router = express.Router();
 
@@ -75,33 +76,23 @@ router.post('/download', async function (req, res, next) {
     }
   });
   // res.send(req.body.format);
-  const fileName = `${req.body.title}-${req.body.format.qualityLabel}.${mimeType}`;
   try {
+    const fileName = `${req.body.title}-${req.body.format.qualityLabel}.${mimeType}`;
+    let info = await ytdl.getInfo(req.body.videoId);
+    let format = ytdl.chooseFormat(info.formats, { quality: req.body.format.itag });
     res.header('Content-Disposition', `attachment; filename=${fileName}`);
-    // await ytdl.downloadFromInfo(req.body.url, req.body.format).pipe(res);
-    await ytdl(req.body.url, { filter: 'audioandvideo',
-    qualityLabel: req.body.format.qualityLabel,
-    width: req.body.format.width,
-    height: req.body.format.height,
-    bitrate: req.body.format.bitrate,
-    itag: req.body.format.itag,
-    // quality: req.body.format.quality,
-    container: mimeType}).pipe(res);
+    await ytdl(req.body.url, format).pipe(res);
+    
+    // await ytdl(req.body.url, { filter: 'audioandvideo',
+    // qualityLabel: req.body.format.qualityLabel,
+    // width: req.body.format.width,
+    // height: req.body.format.height,
+    // bitrate: req.body.format.bitrate,
+    // itag: req.body.format.itag,
+    // container: mimeType}).pipe(res);
   } catch(e) {
     console.log(e);
   }
-
-  // res.header('Content-Disposition', `attachment; filename=${fileName}`);
-
-  // res.header('Content-Disposition', `attachment; filename=${fileName}`);
-  // ytdl(req.body.url, { filter: 'audioandvideo',
-  // qualityLabel: req.body.format.qualityLabel,
-  // width: req.body.format.width,
-  // height: req.body.format.height,
-  // bitrate: req.body.format.bitrate,
-  // itag: req.body.format.itag,
-  // // quality: req.body.format.quality,
-  // container: mimeType}).pipe(res);
 
 });
 
