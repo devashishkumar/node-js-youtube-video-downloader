@@ -8,7 +8,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Download You Tube Video' , videoData: '', url: ''});
+  res.render('index', { title: 'Download You Tube Videos' , videoData: '', url: ''});
 });
 
 router.post('/', function (req, res, next) {
@@ -28,7 +28,7 @@ router.post('/', function (req, res, next) {
       }
     );
   } else {
-    res.render('index', { title: 'Download You Tube Video' , videoData: '', url: ''});
+    res.render('index', { title: 'Download You Tube Videos' , videoData: '', url: ''});
   }
 
 });
