@@ -89,6 +89,7 @@ router.post('/download', async function (req, res, next) {
     }
   });
   try {
+    const fileName = `${req.body.title}-${req.body.format.qualityLabel}.${mimeType}`;
     res.header('Content-Disposition', `attachment; filename=${fileName}`);
     await ytdl(req.body.url, { filter: 'audioandvideo',
     qualityLabel: req.body.format.qualityLabel,
