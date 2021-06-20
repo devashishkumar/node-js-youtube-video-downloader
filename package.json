@@ -12,8 +12,13 @@
     "debug": "~2.6.9",
     "ejs": "~2.6.1",
     "express": "~4.16.1",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^4.4.0",
+    "fluent-ffmpeg": "^2.1.2",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
+    "pully": "^2.7.0",
+    "request": "^2.88.2",
     "youtube-dl-exec": "^1.2.4",
     "ytdl-core": "^4.8.2"
   }
