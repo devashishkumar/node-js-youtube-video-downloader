@@ -7,9 +7,14 @@
   </title>
   <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" />
-  <meta property="og:title" content="Youtube Video Downloader - Download YouTube Videos" />
-  <meta property="og:description" content="Download YouTube videos" />
+  <meta charset="UTF-8">
+  <meta property="title" content="Youtube Video Downloader - Download YouTube Videos" />
+  <meta property="description" content="Download YouTube videos" />
+  <meta name="author" content="Ashish K">
+  <meta http-equiv="refresh" content="120">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
   <!-- <h1>
     <%= title %>
@@ -48,41 +53,14 @@
                 <input type="hidden" name="audioTag" value="<%= audio %>" />
                 <div class="downfun dispweb"> <button class="btn-action" type="submit">Download</button>
                   <div class="select-box"><select id="format" name="format">
-                      <!-- <% if (videoData && videoData.player_response && videoData.player_response.streamingData &&
-                        videoData.player_response.streamingData.adaptiveFormats) { %>
-
-                        <% for(var i=0; i < videoData.player_response.streamingData.adaptiveFormats.length; i++) {%>
-                          <% if (!videoData.player_response.streamingData.adaptiveFormats[i].mimeType.includes('audio'))
-                            {
-                              const bytes = videoData.player_response.streamingData.adaptiveFormats[i].contentLength;
-
-                              const k = 1024;
-                              const decimals = 2;
-                              const dm = decimals < 0 ? 0 : decimals;
-                              const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
-                              const iVal = Math.floor(Math.log(bytes) / Math.log(k));
-
-                              const covertedSize = parseFloat((bytes / Math.pow(k, iVal)).toFixed(dm)) + ' ' + sizes[iVal];
-                            %>
-                            <option
-                              value="<%= JSON.stringify(videoData.player_response.streamingData.adaptiveFormats[i]) %>">
-                              <%= videoData.player_response.streamingData.adaptiveFormats[i].qualityLabel%>
-                                <%= videoData.player_response.streamingData.adaptiveFormats[i].mimeType%>
-                                 (<%= covertedSize %>)
-                            </option>
-                            <% } %>
-                              <% } %>
-                                <% } %> -->
-
-                                <% for(var i=0; i < mimeTypes.length; i++) {%>
-                                    <option
-                                      value="<%= JSON.stringify(videoData.player_response.streamingData.adaptiveFormats[i]) %>">
-                                      <%= mimeTypes[i].qualityLabel %>
-                                        <%= mimeTypes[i].mimeType %>
-                                         (<%= mimeTypes[i].length %>)
-                                    </option>
-                                      <% } %>
+                      <% for(var i=0; i < mimeTypes.length; i++) {%>
+                        <option
+                          value="<%= JSON.stringify(videoData.player_response.streamingData.adaptiveFormats[i]) %>">
+                          <%= mimeTypes[i].qualityLabel %>
+                            <%= mimeTypes[i].mimeType %>
+                              (<%= mimeTypes[i].length %>)
+                        </option>
+                        <% } %>
 
                     </select></div>
                 </div>
@@ -92,19 +70,16 @@
 
       </div>
     </div>
-    
+
     <footer>
       <div class="copyright">
         <ul class="flex flex-a-i-center">
-          <li>Developed By Ashish K</li>
-          <li><a target="_blank" href="https://ashishkumar.hashnode.dev/">Blog URL</a></li>
-          <li><a target="_blank" href="https://npmjs.com/~codewithashish">npm packages</a></li>
-          <!-- <li>Currently 360P download supported. Working on HD videos download</li> -->
+          <li>Currently 360P videos download supported. Working on HD videos download</li>
         </ul>
       </div>
     </footer>
 
-    Currently 360P videos download supported. Working on HD videos download
+    
 </body>
 
 </html>
