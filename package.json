@@ -20,6 +20,6 @@
     "pully": "^2.7.0",
     "request": "^2.88.2",
     "youtube-dl-exec": "^1.2.4",
-    "ytdl-core": "^4.8.2"
+    "ytdl-core": "^4.8.3"
   }
 }
