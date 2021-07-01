@@ -14,7 +14,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body onload="socketConnect()">
+<body>
   <!-- <h1>
     <%= title %>
   </h1> -->
@@ -79,15 +79,15 @@
     </footer>
 
     <p>Currently 360P videos download supported. Working on HD videos download</p>
-    <p>&nbsp;&nbsp;&nbsp;&nbsp;Visitor number <span id="totalusers"></span></p>
+    <!-- <p>&nbsp;&nbsp;&nbsp;&nbsp;Visitor number <span id="totalusers"></span></p> -->
 
 
 </body>
 
-<script src="http://ytubevideosdownloader.herokuapp.com:9898/socket.io/socket.io.js"></script>
+<!-- <script src="http://localhost:9898/socket.io/socket.io.js"></script>
 <script>
   function socketConnect() {
-    var socket = io.connect("http://ytubevideosdownloader.herokuapp.com:9898/");
+    var socket = io.connect("http://localhost:9898/");
     socket.on('totalClients', (msg) => {
       const userTag = document.getElementById('totalusers');
       if (userTag && msg && msg.allClients && msg.allClients.length > 0) {
@@ -95,6 +95,6 @@
       }
     });
   }
-</script>
+</script> -->
 
 </html>

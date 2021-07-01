@@ -20,7 +20,7 @@ var io = require('socket.io')(server, {
     origin: '*',
   }
 });
-server.listen(9898);
+// server.listen(9898);
 
 const sockets = {};
 io.on('connection', function (socket) {
