@@ -14,6 +14,21 @@ var app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+var server = require('http').Server(app);
+var io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
+server.listen(9898);
+
+const sockets = {};
+io.on('connection', function (socket) {
+  sockets[socket.id] = socket;
+  socket.emit('totalClients', { allClients: Object.keys(sockets), currentUser: socket.id });
+
+});
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -23,19 +38,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cors({origin: '*',
-optionsSuccessStatus: 200}));
+app.use(cors({
+  origin: '*',
+  optionsSuccessStatus: 200
+}));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/youtube', youtubeRoutes);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
